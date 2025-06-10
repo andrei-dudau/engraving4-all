@@ -1,0 +1,8 @@
+.item-card:hover {
+  background-color: #F1F1E9;
+  border-color: #E7E7DA;
+  border-width: 4px;
+  border-style: solid;
+  border-top-width: 0;
+  border-left-width: 0;
+}

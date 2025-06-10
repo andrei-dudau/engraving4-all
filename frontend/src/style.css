@@ -1,0 +1,68 @@
+.MuiAppBar-root {
+  background-color: #ffffff !important;
+}
+
+.intro {
+  text-align: center;
+  background-color: #104964;
+  color: white;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  width: 50%;
+  margin: auto
+}
+
+ul {
+  list-style-type: disc !important;
+  text-align: center;
+  margin: 0 auto;
+  list-style-position: inside;
+  padding-left: 0
+}
+
+a:visited{
+  color: white;
+}
+
+.sectionTitle {
+  color: #bdbdbd;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+}
+
+.subcategories {
+  background-image: url("./lineDec.png");
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-position: center;   
+  background-repeat: no-repeat
+}
+
+.subcategory {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.subsection {
+  flex: 1;
+  text-align: center;
+}
+
+.subsection img {
+  width: 200px;
+  height: 200px;
+}
+
+.bolded {
+  font-weight: bold;
+}
+
+.subcategory p {
+  padding-left: 20px;
+  padding-right: 20px;
+}

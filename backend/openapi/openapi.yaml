@@ -1,0 +1,152 @@
+openapi: 3.0.0
+info:
+  title: Engraving4All API
+  version: 1.0.0
+  description: API for Engraving4All, pulling data from multiple services
+
+servers:
+  - url: https://api.engraving4all.com/v1
+
+paths:
+  /api/database/health:
+    get:
+      summary: Check database health
+      description: Performs a simple query to verify that the database connection is operational
+      responses:
+        '200':
+          description: Database connection is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status message
+                    example: Database connection is healthy
+        '500':
+          description: Database connection failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status message
+                    example: Database connection failed
+
+  /api/database/images:
+    get:
+      summary: Get all images
+      description: Fetch all image records from the database
+      responses:
+        '200':
+          description: A list of images
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Image'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Status message
+                    example: Server error
+
+  /api/database/products:
+    get:
+      summary: Get all products
+      description: Fetch all products from the database
+      responses:
+        '200':
+          description: A list of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                    example: Server error
+
+  /api/database/testimonials:
+    get:
+      summary: Get all testimonials
+      description: Fetch all testimonials that are set to showcase and order them by the "order" column
+      responses:
+        '200':
+          description: A list of testimonials
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Testimonial'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                    example: Server error
+
+components:
+  schemas:
+    Testimonial:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The ID of the testimonial
+        logo:
+          type: string
+          format: uri
+          description: The logo URL of the client
+        name:
+          type: string
+          description: The name of the client
+        description:
+          type: string
+          description: The testimonial content
+
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The ID of the product
+
+    Image:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: The ID of the image
+        url:
+          type: string
+          format: uri
+          description: The URL of the image
+        alt_text:
+          type: string
+          description: The alt text for the image

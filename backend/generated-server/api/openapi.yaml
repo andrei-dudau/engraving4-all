@@ -1,0 +1,176 @@
+openapi: 3.0.0
+info:
+  description: "API for Engraving4All, pulling data from multiple services"
+  title: Engraving4All API
+  version: 1.0.0
+servers:
+- url: https://api.engraving4all.com/v1
+paths:
+  /api/database/health:
+    get:
+      description: Performs a simple query to verify that the database connection
+        is operational
+      operationId: apiDatabaseHealthGET
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/_api_database_health_get_200_response'
+          description: Database connection is healthy
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/_api_database_health_get_500_response'
+          description: Database connection failed
+      summary: Check database health
+      x-eov-operation-handler: controllers/DefaultController
+  /api/database/images:
+    get:
+      description: Fetch all image records from the database
+      operationId: apiDatabaseImagesGET
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Image'
+                type: array
+          description: A list of images
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/_api_database_images_get_500_response'
+          description: Server error
+      summary: Get all images
+      x-eov-operation-handler: controllers/DefaultController
+  /api/database/products:
+    get:
+      description: Fetch all products from the database
+      operationId: apiDatabaseProductsGET
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Product'
+                type: array
+          description: A list of products
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/_api_database_products_get_500_response'
+          description: Server error
+      summary: Get all products
+      x-eov-operation-handler: controllers/DefaultController
+  /api/database/testimonials:
+    get:
+      description: Fetch all testimonials that are set to showcase and order them
+        by the "order" column
+      operationId: apiDatabaseTestimonialsGET
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Testimonial'
+                type: array
+          description: A list of testimonials
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/_api_database_products_get_500_response'
+          description: Server error
+      summary: Get all testimonials
+      x-eov-operation-handler: controllers/DefaultController
+components:
+  schemas:
+    Testimonial:
+      example:
+        name: name
+        logo: https://openapi-generator.tech
+        description: description
+        id: 0
+      properties:
+        id:
+          description: The ID of the testimonial
+          type: integer
+        logo:
+          description: The logo URL of the client
+          format: uri
+          type: string
+        name:
+          description: The name of the client
+          type: string
+        description:
+          description: The testimonial content
+          type: string
+      type: object
+    Product:
+      example:
+        id: 0
+      properties:
+        id:
+          description: The ID of the product
+          type: integer
+      type: object
+    Image:
+      example:
+        alt_text: alt_text
+        id: 0
+        url: https://openapi-generator.tech
+      properties:
+        id:
+          description: The ID of the image
+          type: integer
+        url:
+          description: The URL of the image
+          format: uri
+          type: string
+        alt_text:
+          description: The alt text for the image
+          type: string
+      type: object
+    _api_database_health_get_200_response:
+      example:
+        status: Database connection is healthy
+      properties:
+        status:
+          description: Status message
+          example: Database connection is healthy
+          type: string
+      type: object
+    _api_database_health_get_500_response:
+      example:
+        status: Database connection failed
+      properties:
+        status:
+          description: Status message
+          example: Database connection failed
+          type: string
+      type: object
+    _api_database_images_get_500_response:
+      example:
+        status: Server error
+      properties:
+        status:
+          description: Status message
+          example: Server error
+          type: string
+      type: object
+    _api_database_products_get_500_response:
+      example:
+        message: Server error
+      properties:
+        message:
+          description: Error message
+          example: Server error
+          type: string
+      type: object
