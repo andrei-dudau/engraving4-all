@@ -1,97 +1,120 @@
-import React, { useState } from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import MenuIcon from "@mui/icons-material/Menu";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link } from "react-router-dom";
 import "../style.css";
 import logo from "../logo.png";
 
+const navItems = [
+  { text: "Drinkware", to: "/drinkware" },
+  { text: "Coasters", to: "/coasters" },
+  { text: "Gift Sets", to: "/gift-sets" },
+  { text: "Promotional", to: "/promotional" },
+  { text: "Contact", to: "/contact" },
+  { text: "About", to: "/about" },
+];
+
 const Navbar: React.FC = () => {
-  const [drawerOpen, setDrawerOpen] = useState(false);
-
-  const toggleDrawer = (open: boolean) => () => {
-    setDrawerOpen(open);
-  };
-
-  const navItems = [
-    { text: "SHOP", to: "/shop" },
-    { text: "TESTIMONIALS", to: "/testimonials" },
-    { text: "CONTACT", to: "/contact" },
-  ];
+  const blue = "#070E8B";
 
   return (
-    <AppBar position="fixed" sx={{ backgroundColor: '#f0f0f0', height: '120px', boxShadow: 'none' }}>
+    <AppBar
+      position="fixed"
+      sx={{
+        backgroundColor: "#ffffff",
+        color: blue,
+        boxShadow: "none",
+        borderBottom: "1px solid #e0e0e0",
+      }}
+    >
+      {/* Thin top blue strip */}
+      <Box sx={{ width: "100%", height: "20px", bgcolor: blue }} />
+
+      {/* Centered header content */}
       <Toolbar
         sx={{
-          height: '100px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          position: 'relative',
+          minHeight: 90,
+          px: 2,
+          display: "flex",
+          justifyContent: "center",
         }}
       >
-        {/* Hamburger icon */}
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          onClick={toggleDrawer(true)}
-          sx={{ position: "absolute", left: 55, bottom: 20, color: "#9c6d28" }}
-        >
-          <MenuIcon />
-        </IconButton>
-
-        {/* Drawer */}
-        <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
-          <Box sx={{ width: 250, paddingTop: 2 }} role="presentation">
-            <IconButton onClick={toggleDrawer(false)} sx={{ ml: 1 }}>
-              <ArrowBackIcon />
-            </IconButton>
-            <List sx={{ mt: 2 }}>
-              {navItems.map((item) => (
-                <ListItem key={item.text} disablePadding>
-                  <ListItemButton component={Link} to={item.to}>
-                    <ListItemText primary={item.text} primaryTypographyProps={{ sx: { color: '#9c6d28', fontWeight: 'bold' } }} />
-                  </ListItemButton>
-                </ListItem>
-              ))}
-            </List>
-          </Box>
-        </Drawer>
-
-        {/* Triangle */}
         <Box
           sx={{
-            position: 'absolute',
-            bottom: -40,
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: 0,
-            height: 0,
-            borderLeft: '100px solid transparent',
-            borderRight: '100px solid transparent',
-            borderTop: '25px solid #ffffff',
+            display: "flex",
+            alignItems: "center",
+            width: "100%",
+            maxWidth: "1400px",
+            px: 2,
           }}
-        />
+        >
+          {/* LEFT COLUMN — LOGO (slightly off-center) */}
+          <Box
+            sx={{
+              flex: "0 0 200px",        // fixed-ish width keeps nav centered
+              display: "flex",
+              justifyContent: "flex-start",
+            }}
+          >
+            <Box
+              component={Link}
+              to="/"
+              sx={{ textDecoration: "none" }}
+            >
+              <Box
+                component="img"
+                src={logo}
+                alt="Logo"
+                sx={{
+                  height: 80,
+                  width: "auto",
+                  display: "block",
+                }}
+              />
+            </Box>
+          </Box>
 
-        {/* Centered logo */}
-        <Box sx={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)' }}>
-          <Link to="/" style={{ textDecoration: 'none' }}>
-            <img
-              src={logo}
-              alt="Engraving4All Logo"
-              style={{ height: '100px', width: 'auto', display: 'block' }}
-            />
-          </Link>
+          {/* CENTER COLUMN — NAV ITEMS */}
+          <Box
+            sx={{
+              flex: "1 1 auto",
+              display: "flex",
+              justifyContent: "center",   // <-- centers nav perfectly
+              gap: 3,
+            }}
+          >
+            {navItems.map((item) => (
+              <Button
+                key={item.text}
+                component={Link}
+                to={item.to}
+                sx={{
+                  color: blue,
+                  fontWeight: 500,
+                  fontSize: "1rem",
+                  textTransform: "none",
+                  letterSpacing: "0.05em",
+                  "&:hover": {
+                    backgroundColor: "transparent",
+                    textDecoration: "underline",
+                  },
+                  "&:visited": { color: blue },
+                  "&:link": { color: blue },
+                }}
+              >
+                {item.text}
+              </Button>
+            ))}
+          </Box>
+
+          {/* RIGHT COLUMN — EMPTY (keeps nav centered) */}
+          <Box
+            sx={{
+              flex: "0 0 200px",
+            }}
+          />
         </Box>
       </Toolbar>
     </AppBar>
